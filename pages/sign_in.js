@@ -28,7 +28,11 @@ const SignIn = () => {
             .matches(
                 /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{7,}$/,
                 "Must Contain 7 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-              )
+              ),
+
+            confirmPassword: Yup.string()
+            .required('Please re-enter password')
+            .oneOf([Yup.ref('password')], 'Your passwords do not match.')
 
         }),
         onSubmit: (values) => {
@@ -73,7 +77,7 @@ const SignIn = () => {
 
                         </div>
 
-                        <div className='form-group'>
+                        <div className='form-group mb-3'>
                             <TextField 
                                 style={{width: '50%'}}
                                 name="password"
@@ -82,6 +86,18 @@ const SignIn = () => {
                                 variant="outlined"
                                 {...formik.getFieldProps('password')}
                                 {...errorHandler(formik, 'password')}
+                            />
+                        </div>
+
+                        <div className='form-group'>
+                            <TextField 
+                                style={{width: '50%'}}
+                                name="confirmPassword"
+                                label="Confirm Password"
+                                type="password"
+                                variant="outlined"
+                                {...formik.getFieldProps('confirmPassword')}
+                                {...errorHandler(formik, 'confirmPassword')}
                             />
                         </div>
 
