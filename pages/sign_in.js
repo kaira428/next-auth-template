@@ -7,13 +7,15 @@ import Button from '@mui/material/Button';
 
 import { errorHandler } from '../utils/errorHandler';
 
+import axios from 'axios';
+
 const SignIn = () => {
 
     const [formType, setFormType] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const formik = useFormik({
-        initialValues: { email: '', password: ''},
+        initialValues: { email: 'test@abc.com', password: '1Q#welcome'},
         validationSchema: Yup.object({
             email: Yup.string()
             .required('Email is required.')
@@ -23,12 +25,28 @@ const SignIn = () => {
             .required('Password is required')
             .min(7, 'Password must be between 7 to 15 characters')
             .max(15, 'Password must be between 7 to 15 characters')
+            .matches(
+                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{7,}$/,
+                "Must Contain 7 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+              )
 
         }),
         onSubmit: (values) => {
-            console.log(values)
+            submitForm(values);
         }
     })
+
+    const submitForm = (values) => {
+        if (formType){
+            // register
+            axios.post('/api/auth', values)
+            .then(response => {
+                console.log(response.data);
+            })
+        } else {
+            // sign-in
+        }
+    }
 
     const handleFormType = () => {
         setFormType(!formType);
@@ -88,7 +106,6 @@ const SignIn = () => {
                             </Button>
                         </div>                                   
                     </form>
-
             }
         </div>
     )
