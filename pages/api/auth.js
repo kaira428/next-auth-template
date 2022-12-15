@@ -23,17 +23,16 @@ export default async function handler(req, res) {
   const db = mongoClient.db("auth-proj");
 
   // check with user has already registered
-  // const userAlreadyRegistered = db.collection('users').findOne({email});
+  const userAlreadyRegistered = await db.collection('users').findOne({email});
 
   // console.log(userAlreadyRegistered);
 
-  // if (userAlreadyRegistered){
-  //   res.status(400).json({ message: "User already registered", error })
-  //   return;
-  // }
+  if (userAlreadyRegistered){
+    res.status(400).json({ message: "User already registered"})
+    return;
+  }
 
-  try {
-    
+  try {    
     // hash password
     const hashedPassword = await hashPassword(password);
 
