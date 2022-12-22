@@ -11,7 +11,7 @@ import axios from "axios";
 
 import { signIn } from "next-auth/react";
 
-const SignIn = () => {
+const RegisterUser = () => {
   const [formType, setFormType] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -30,6 +30,10 @@ const SignIn = () => {
           /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{7,}$/,
           "Must Contain 7 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
         ),
+
+      confirmPassword: Yup.string()
+        .required("Please re-enter password")
+        .oneOf([Yup.ref("password")], "Your passwords do not match.")
     }),
     onSubmit: (values) => {
       submitForm(values);
@@ -66,7 +70,7 @@ const SignIn = () => {
 
   return (
     <div>
-      <h1>{formType ? "Register" : "Sign in"}</h1>
+      <h1>Register</h1>
 
       {loading ? (
         <h4>...loading</h4>
@@ -95,6 +99,18 @@ const SignIn = () => {
             />
           </div>
 
+          <div className="form-group">
+            <TextField
+              style={{ width: "50%" }}
+              name="confirmPassword"
+              label="Confirm Password"
+              type="password"
+              variant="outlined"
+              {...formik.getFieldProps("confirmPassword")}
+              {...errorHandler(formik, "confirmPassword")}
+            />
+          </div>
+
           <div className="mt-3 mb-2">
             <Button
               variant="contained"
@@ -102,11 +118,11 @@ const SignIn = () => {
               type="submit"
               size="small"
             >
-              Login
+              {formType ? "Register" : "Login"}
             </Button>
           </div>
 
-          {/* <div className="mt-3 mb-2">
+          <div className="mt-3 mb-2">
             <Button
               color="secondary"
               variant="text"
@@ -115,11 +131,11 @@ const SignIn = () => {
             >
               {formType ? "Need to sign in?" : "New User - Need to register?"}
             </Button>
-          </div> */}
+          </div>
         </form>
       )}
     </div>
   );
 };
 
-export default SignIn;
+export default RegisterUser;
