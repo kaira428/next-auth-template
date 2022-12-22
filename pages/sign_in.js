@@ -53,12 +53,12 @@ const SignIn = () => {
         });
     } else {
       // sign-in
-      const result = await signIn('credentials', {
+      const result = await signIn("credentials", {
         redirect: false,
         email: values.email,
         password: values.password,
         // callbackUrl: '/dashboard'
-      })
+      });
 
       console.log(result);
     }
