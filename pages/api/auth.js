@@ -43,7 +43,7 @@ export default async function handler(req, res) {
       password: hashedPassword,
     });
 
-    res.status(200).json({ message: "User successfully registerd." });
+    res.status(200).json({ message: "User successfully registered." });
   } catch (error) {
     res.status(500).json({ message: "Error registering user.", error });
   }
