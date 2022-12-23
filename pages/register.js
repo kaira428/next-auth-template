@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -12,8 +13,9 @@ import axios from "axios";
 import { signIn } from "next-auth/react";
 
 const RegisterUser = () => {
-  const [formType, setFormType] = useState(false);
+  const [formType, setFormType] = useState(true); //set to true to indicate Register user
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: { email: "test@abc.com", password: "1Q#welcome" },
@@ -118,7 +120,8 @@ const RegisterUser = () => {
               type="submit"
               size="small"
             >
-              {formType ? "Register" : "Login"}
+              {/* {formType ? "Register" : "Login"} */}
+              Register
             </Button>
           </div>
 
@@ -126,10 +129,13 @@ const RegisterUser = () => {
             <Button
               color="secondary"
               variant="text"
-              onClick={handleFormType}
+              onClick={() => {
+                router.push('sign_in');
+              }}
               size="small"
             >
-              {formType ? "Need to sign in?" : "New User - Need to register?"}
+              {/* {formType ? "Need to sign in?" : "New User - Need to register?"} */}
+              Need to sign in?
             </Button>
           </div>
         </form>

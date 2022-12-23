@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -12,8 +13,9 @@ import axios from "axios";
 import { signIn } from "next-auth/react";
 
 const SignIn = () => {
-  const [formType, setFormType] = useState(false);
+  const [formType, setFormType] = useState(false); //set to false to indicate Register user
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: { email: "test@abc.com", password: "1Q#welcome" },
@@ -57,6 +59,14 @@ const SignIn = () => {
       });
 
       console.log(result);
+
+      if (!result.error) {
+        router.push('/dashboard');
+      }
+      else {
+        console.log('Error logging in.')
+        return;
+      }
     }
   };
 
@@ -66,7 +76,7 @@ const SignIn = () => {
 
   return (
     <div>
-      <h1>{formType ? "Register" : "Sign in"}</h1>
+      <h1>Sign in</h1>
 
       {loading ? (
         <h4>...loading</h4>
@@ -106,16 +116,19 @@ const SignIn = () => {
             </Button>
           </div>
 
-          {/* <div className="mt-3 mb-2">
+          <div className="mt-3 mb-2">
             <Button
               color="secondary"
               variant="text"
-              onClick={handleFormType}
+              onClick={() => {
+                router.push('register');
+              }}
               size="small"
             >
-              {formType ? "Need to sign in?" : "New User - Need to register?"}
+              {/* {formType ? "Need to sign in?" : "New User - Need to register?"} */}
+              New User - To register
             </Button>
-          </div> */}
+          </div>
         </form>
       )}
     </div>

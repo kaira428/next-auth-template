@@ -25,15 +25,15 @@ const Navigation = () => {
                         <Nav.Link>Dashboard</Nav.Link>
                     </Link> */}
 
-          <Link href="/sign_in" style={{color: 'white', 'padding-right': '20px'}}>
+          <Link href="/sign_in" style={{color: 'white', paddingRight: '20px'}}>
             Sign in
           </Link>
 
-          <Link href="/register" style={{color: 'white', 'padding-right': '20px'}}>
+          <Link href="/register" style={{color: 'white', paddingRight: '20px'}}>
             Register
           </Link>
 
-          <Link href="/sign_out" style={{color: 'white', 'padding-right': '20px'}}>
+          <Link href="/sign_out" style={{color: 'white', paddingRight: '20px'}}>
             Sign out
           </Link>
 
