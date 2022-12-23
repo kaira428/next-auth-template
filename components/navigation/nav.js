@@ -1,7 +1,10 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
 import Link from "next/link";
+import { useSession, signOut } from "next-auth/react";
 
 const Navigation = () => {
+  const { data: session, status } = useSession();
+
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
@@ -25,21 +28,37 @@ const Navigation = () => {
                         <Nav.Link>Dashboard</Nav.Link>
                     </Link> */}
 
-          <Link href="/sign_in" style={{color: 'white', paddingRight: '20px'}}>
-            Sign in
-          </Link>
+          {!session && status != "loading" && (
+            <Link
+              href="/sign_in"
+              style={{ color: "white", paddingRight: "20px" }}
+            >
+              Sign in
+            </Link>
+          )}
 
-          <Link href="/register" style={{color: 'white', paddingRight: '20px'}}>
+          {/* <Link
+            href="/register"
+            style={{ color: "white", paddingRight: "20px" }}
+          >
             Register
-          </Link>
+          </Link> */}
 
-          <Link href="/sign_out" style={{color: 'white', paddingRight: '20px'}}>
-            Sign out
-          </Link>
+          {session && status != "loading" && (
+            <>
+              <Link
+                href="#"
+                style={{ color: "white", paddingRight: "20px" }}
+                onClick={() => signOut({ callbackUrl: "/" })}
+              >
+                Sign out
+              </Link>
 
-          <Link href="/dashboard" style={{color: 'white'}}>
-            Dashboard
-          </Link>
+              <Link href="/dashboard" style={{ color: "white" }}>
+                Dashboard
+              </Link>
+            </>
+          )}
         </Nav>
       </Container>
     </Navbar>
