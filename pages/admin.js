@@ -18,7 +18,7 @@ export const getServerSideProps = async (context) => {
 
     const session = await getSession({req: context.req});
 
-    // console.log(session.user.email);
+    // console.log(session.user);
 
     if (!session) {
         return {

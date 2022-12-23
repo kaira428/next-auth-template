@@ -20,7 +20,9 @@ export default async function handler(req, res) {
   }
 
   const mongoClient = await connectToDb();
-  const db = mongoClient.db("auth-proj");
+  const db = mongoClient.db();
+
+  // const db = mongoClient.db("auth-proj");
 
   // check with user has already registered
   const userAlreadyRegistered = await db.collection('users').findOne({email});

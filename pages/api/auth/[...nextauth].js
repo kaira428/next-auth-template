@@ -16,7 +16,8 @@ export default NextAuth({
 
         // user check
         const user = await mongoClient
-          .db("auth-proj")
+          // .db("auth-proj")
+          .db()
           .collection("users")
           .findOne({
             email: credentials.email,
@@ -40,7 +41,7 @@ export default NextAuth({
 
         mongoClient.close();
 
-        return { email: user.email };
+        return { email: user.email};
       },
     }),
   ],
